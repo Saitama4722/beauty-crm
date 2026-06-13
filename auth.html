@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход и регистрация — ЭЛИТ ЭСТЕТИКА</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --burgundy:      #8B2252;
+      --burgundy-dark: #6e1a42;
+      --rose-gold:     #E8A0BF;
+      --champagne:     #F7E7CE;
+      --dark-text:     #2D2D2D;
+      --light-beige:   #FAF3EC;
+      --white:         #FFFFFF;
+      --muted:         #888888;
+
+      --shadow-soft:   0 4px 20px rgba(139, 34, 82, 0.08);
+      --shadow-hover:  0 8px 32px rgba(139, 34, 82, 0.16);
+      --transition:    200ms ease-out;
+      --radius-card:   12px;
+      --radius-btn:    6px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: var(--light-beige);
+      font-family: 'Inter', sans-serif;
+      color: var(--dark-text);
+      padding-top: 76px;
+      margin: 0;
+    }
+    h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; }
+
+    .btn-primary { background-color: var(--burgundy) !important; border-color: var(--burgundy) !important; }
+    .btn-primary:hover { background-color: var(--burgundy-dark) !important; border-color: var(--burgundy-dark) !important; }
+    a { color: var(--burgundy); text-decoration: none; }
+    a:hover { color: var(--burgundy-dark); }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: var(--white);
+      border-bottom: 2px solid var(--champagne);
+      padding: 14px 0;
+      position: fixed;
+      top: 0; width: 100%; z-index: 1000;
+      box-shadow: 0 2px 12px rgba(139,34,82,0.06);
+    }
+    .navbar-brand { font-family: 'Playfair Display', serif; color: var(--burgundy); font-size: 1.25rem; font-weight: 700; }
+    .navbar-brand:hover { color: var(--burgundy-dark); }
+    .nav-link { color: var(--dark-text); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; transition: color var(--transition); }
+    .nav-link:hover, .nav-link.active { color: var(--burgundy); }
+    .nav-phone { color: var(--burgundy); font-weight: 600; font-size: 0.9rem; white-space: nowrap; }
+    .nav-phone:hover { color: var(--burgundy-dark); }
+
+    /* ===== BUTTONS ===== */
+    .btn-beauty {
+      background: var(--burgundy); color: #fff; border: none;
+      padding: 12px 28px; font-family: 'Inter', sans-serif; font-weight: 600;
+      font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
+      border-radius: var(--radius-btn); transition: background var(--transition), transform var(--transition); cursor: pointer;
+    }
+    .btn-beauty:hover { background: var(--burgundy-dark); color: #fff; transform: translateY(-1px); }
+    .btn-beauty[disabled] { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      background-image: linear-gradient(rgba(45,45,45,0.55), rgba(45,45,45,0.5)),
+        url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600&q=80');
+      background-size: cover; background-position: center;
+      padding: 60px 0 50px; color: #fff; text-align: center;
+    }
+    .page-header h1 { color: #fff; font-size: clamp(1.8rem, 4vw, 2.6rem); text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+    .breadcrumb-beauty { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+    .breadcrumb-beauty a { color: rgba(255,255,255,0.85); }
+    .breadcrumb-beauty a:hover { color: var(--rose-gold); }
+
+    /* ===== AUTH CARD ===== */
+    .auth-section { padding: 70px 0; }
+    .auth-card {
+      background: var(--white);
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(232,160,191,0.2);
+      padding: 44px 40px;
+    }
+    .auth-card .card-title { text-align: center; font-size: 1.9rem; margin-bottom: 8px; }
+    .auth-card .card-sub { text-align: center; color: var(--muted); margin-bottom: 36px; font-size: 0.95rem; }
+
+    .auth-col-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 600;
+      text-align: center; margin-bottom: 6px;
+    }
+    .deco-icon {
+      display: block; text-align: center; font-size: 1.8rem; color: var(--rose-gold); margin-bottom: 8px;
+    }
+    .auth-divider {
+      border-left: 1px solid rgba(232,160,191,0.4);
+    }
+    @media (max-width: 767px) { .auth-divider { border-left: none; border-top: 1px solid rgba(232,160,191,0.4); margin-top: 36px; padding-top: 36px; } }
+
+    /* ===== FORM ===== */
+    .form-label {
+      font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--dark-text); margin-bottom: 6px;
+    }
+    .form-control, .form-select {
+      border: 1.5px solid var(--rose-gold); border-radius: var(--radius-btn);
+      padding: 12px 16px; font-family: 'Inter', sans-serif;
+      background: var(--light-beige); color: var(--dark-text);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--burgundy); box-shadow: 0 0 0 3px rgba(139,34,82,0.12);
+      background: var(--white); outline: none;
+    }
+    .form-control::placeholder { color: #bbb; font-style: italic; }
+    .error-msg { color: #c0392b; font-size: 0.78rem; margin-top: 4px; display: none; }
+    .error-msg.show { display: block; }
+    .form-control.is-invalid { border-color: #c0392b; background-image: none; }
+
+    .pw-wrap { position: relative; }
+    .pw-toggle {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      border: none; background: transparent; color: var(--muted); cursor: pointer; font-size: 1.05rem; padding: 0;
+    }
+    .pw-toggle:hover { color: var(--burgundy); }
+
+    .form-check-input:checked { background-color: var(--burgundy); border-color: var(--burgundy); }
+    .form-check-label { font-size: 0.85rem; color: var(--dark-text); }
+
+    .auth-alert { display: none; border-radius: var(--radius-btn); padding: 12px 16px; font-size: 0.9rem; margin-bottom: 18px; }
+    .auth-alert.show { display: block; }
+    .auth-alert-success { background: rgba(232,160,191,0.18); color: var(--burgundy); border: 1px solid var(--rose-gold); }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--dark-text); color: rgba(255,255,255,0.75); padding: 40px 0 24px; font-family: 'Inter', sans-serif; font-size: 0.88rem; }
+    footer .footer-brand { font-family: 'Playfair Display', serif; color: var(--rose-gold); font-size: 1.15rem; font-weight: 700; }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    footer a:hover { color: var(--rose-gold); }
+    footer p, footer li { margin-bottom: 8px; }
+    footer h5 { color: #fff; font-size: 0.95rem; margin-bottom: 16px; letter-spacing: 0.04em; }
+    .footer-list { list-style: none; padding: 0; margin: 0; }
+    .social-icon { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: inline-flex; align-items: center; justify-content: center; margin: 0 4px; color: rgba(255,255,255,0.7); transition: all var(--transition); font-size: 1rem; }
+    .social-icon:hover { border-color: var(--rose-gold); color: var(--rose-gold); background: rgba(232,160,191,0.1); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 28px; padding-top: 18px; text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">🌸 ЭЛИТ ЭСТЕТИКА</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Меню">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#services">Услуги</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#prices">Цены</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#masters">Мастера</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#offers">Акции</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#contacts">Контакты</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <a href="appointment.html" class="btn-beauty">Записаться онлайн</a>
+          <a href="tel:+74951234567" class="nav-phone d-none d-xl-inline">+7 495 123-4567</a>
+          <a href="auth.html" class="nav-link active mb-0">Войти</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ===== PAGE HEADER ===== -->
+    <header class="page-header">
+      <div class="container">
+        <nav class="breadcrumb-beauty mb-2" aria-label="Хлебные крошки">
+          <a href="index.html">Главная</a> &nbsp;/&nbsp; <span>Вход/Регистрация</span>
+        </nav>
+        <h1>Вход и регистрация</h1>
+      </div>
+    </header>
+
+    <!-- ===== AUTH ===== -->
+    <section class="auth-section">
+      <div class="container">
+        <div class="auth-card">
+          <h2 class="card-title">Личный кабинет</h2>
+          <p class="card-sub">Войдите или создайте аккаунт, чтобы записываться онлайн и следить за визитами</p>
+
+          <div class="row gy-4">
+            <!-- ===== LOGIN ===== -->
+            <div class="col-12 col-md-6 pe-md-5">
+              <i class="bi bi-flower1 deco-icon" aria-hidden="true"></i>
+              <h3 class="auth-col-title">Вход в личный кабинет</h3>
+              <p class="text-center text-muted mb-4" style="font-size:0.85rem;">Рады видеть вас снова</p>
+
+              <div id="loginAlert" class="auth-alert auth-alert-success" role="status"></div>
+
+              <form id="loginForm" novalidate>
+                <div class="mb-3">
+                  <label for="loginContact" class="form-label">Номер телефона или E-mail</label>
+                  <input type="text" class="form-control" id="loginContact" placeholder="example@mail.ru">
+                  <div class="error-msg" id="err-loginContact">Введите телефон или e-mail</div>
+                </div>
+                <div class="mb-3">
+                  <label for="loginPassword" class="form-label">Пароль</label>
+                  <div class="pw-wrap">
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Ваш пароль">
+                    <button type="button" class="pw-toggle" data-target="loginPassword" aria-label="Показать пароль"><i class="bi bi-eye"></i></button>
+                  </div>
+                  <div class="error-msg" id="err-loginPassword">Введите пароль</div>
+                </div>
+                <button type="submit" class="btn-beauty w-100">Войти</button>
+                <div class="text-center mt-3">
+                  <a href="index.html" style="font-size:0.85rem;">Продолжить как гость</a>
+                </div>
+              </form>
+            </div>
+
+            <!-- ===== REGISTER ===== -->
+            <div class="col-12 col-md-6 ps-md-5 auth-divider">
+              <i class="bi bi-gem deco-icon" aria-hidden="true"></i>
+              <h3 class="auth-col-title">Регистрация нового клиента</h3>
+              <p class="text-center text-muted mb-4" style="font-size:0.85rem;">Создайте аккаунт за минуту</p>
+
+              <div id="regAlert" class="auth-alert auth-alert-success" role="status"></div>
+
+              <form id="registerForm" novalidate>
+                <div class="mb-3">
+                  <label for="regName" class="form-label">Ваше имя</label>
+                  <input type="text" class="form-control" id="regName" placeholder="Анна">
+                  <div class="error-msg" id="err-regName">Введите ваше имя</div>
+                </div>
+                <div class="mb-3">
+                  <label for="regPhone" class="form-label">Номер телефона</label>
+                  <input type="tel" class="form-control" id="regPhone" placeholder="+7 (___) ___-__-__">
+                  <div class="error-msg" id="err-regPhone">Введите номер телефона</div>
+                </div>
+                <div class="mb-3">
+                  <label for="regPassword" class="form-label">Пароль</label>
+                  <div class="pw-wrap">
+                    <input type="password" class="form-control" id="regPassword" placeholder="Придумайте пароль">
+                    <button type="button" class="pw-toggle" data-target="regPassword" aria-label="Показать пароль"><i class="bi bi-eye"></i></button>
+                  </div>
+                  <div class="error-msg" id="err-regPassword">Придумайте пароль</div>
+                </div>
+                <div class="mb-3">
+                  <label for="regEmail" class="form-label">E-mail</label>
+                  <input type="email" class="form-control" id="regEmail" placeholder="example@mail.ru">
+                  <div class="error-msg" id="err-regEmail">Введите e-mail</div>
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="regAgree">
+                  <label class="form-check-label" for="regAgree">Я согласен с условиями использования и политикой конфиденциальности</label>
+                  <div class="error-msg" id="err-regAgree">Необходимо принять условия</div>
+                </div>
+                <button type="submit" class="btn-beauty w-100">Зарегистрироваться</button>
+                <div class="text-center mt-3">
+                  <a href="#" id="goLogin" style="font-size:0.85rem;">Уже есть аккаунт? Войдите здесь</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-12 col-md-4">
+          <h5>Контакты</h5>
+          <ul class="footer-list">
+            <li><i class="bi bi-geo-alt"></i> Москва, ул. Краснова, д.18</li>
+            <li><i class="bi bi-telephone"></i> <a href="tel:+74951234567">+7 495 123-4567</a></li>
+            <li><i class="bi bi-clock"></i> Пн-Вс: 10:00–21:00</li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-4 text-center">
+          <h5>Мы в соцсетях</h5>
+          <a href="#" class="social-icon" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social-icon" aria-label="ВКонтакте"><i class="bi bi-chat-dots"></i></a>
+        </div>
+        <div class="col-12 col-md-4 text-md-end">
+          <div class="footer-brand">🌸 ЭЛИТ ЭСТЕТИКА</div>
+          <p class="mt-2 mb-0">Салон красоты в самом сердце Москвы.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 ЭЛИТ ЭСТЕТИКА. Все права защищены.</div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ===== Mobile menu collapse on link click =====
+    document.querySelectorAll('#mainNav .nav-link').forEach(function (link) {
+      link.addEventListener('click', function () {
+        var nav = document.getElementById('mainNav');
+        var collapse = bootstrap.Collapse.getInstance(nav);
+        if (collapse && window.innerWidth < 992) collapse.hide();
+      });
+    });
+
+    // ===== Password show/hide toggles =====
+    document.querySelectorAll('.pw-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var input = document.getElementById(btn.dataset.target);
+        var icon = btn.querySelector('i');
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.replace('bi-eye', 'bi-eye-slash');
+          btn.setAttribute('aria-label', 'Скрыть пароль');
+        } else {
+          input.type = 'password';
+          icon.classList.replace('bi-eye-slash', 'bi-eye');
+          btn.setAttribute('aria-label', 'Показать пароль');
+        }
+      });
+    });
+
+    // ===== Validation helpers =====
+    function showError(id) {
+      var field = document.getElementById(id);
+      var err = document.getElementById('err-' + id);
+      if (field) field.classList.add('is-invalid');
+      if (err) err.classList.add('show');
+    }
+    function clearError(id) {
+      var field = document.getElementById(id);
+      var err = document.getElementById('err-' + id);
+      if (field) field.classList.remove('is-invalid');
+      if (err) err.classList.remove('show');
+    }
+    // Clear errors as the user types / interacts
+    ['loginContact','loginPassword','regName','regPhone','regPassword','regEmail'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('input', function () { clearError(id); });
+    });
+    document.getElementById('regAgree').addEventListener('change', function () { clearError('regAgree'); });
+
+    function showAlert(el, msg) {
+      el.textContent = msg;
+      el.classList.add('show');
+    }
+
+    // ===== LOGIN submit =====
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var contact = document.getElementById('loginContact').value.trim();
+      var pw = document.getElementById('loginPassword').value.trim();
+      var ok = true;
+
+      if (!contact) { showError('loginContact'); ok = false; }
+      if (!pw) { showError('loginPassword'); ok = false; }
+      if (!ok) return;
+
+      var btn = this.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Входим…';
+      showAlert(document.getElementById('loginAlert'), 'Добро пожаловать! Выполняется вход…');
+      setTimeout(function () { window.location.href = 'index.html'; }, 1500);
+    });
+
+    // ===== REGISTER submit =====
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = document.getElementById('regName').value.trim();
+      var phone = document.getElementById('regPhone').value.trim();
+      var pw = document.getElementById('regPassword').value.trim();
+      var email = document.getElementById('regEmail').value.trim();
+      var agree = document.getElementById('regAgree').checked;
+      var ok = true;
+
+      if (!name)  { showError('regName'); ok = false; }
+      if (!phone) { showError('regPhone'); ok = false; }
+      if (!pw)    { showError('regPassword'); ok = false; }
+      if (!email) { showError('regEmail'); ok = false; }
+      if (!agree) { showError('regAgree'); ok = false; }
+      if (!ok) return;
+
+      var btn = this.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Регистрируем…';
+      showAlert(document.getElementById('regAlert'), 'Регистрация успешна! Добро пожаловать!');
+      setTimeout(function () { window.location.href = 'index.html'; }, 1500);
+    });
+
+    // Scroll to login column from the "уже есть аккаунт" link
+    document.getElementById('goLogin').addEventListener('click', function (e) {
+      e.preventDefault();
+      document.getElementById('loginContact').focus({ preventScroll: false });
+      document.getElementById('loginContact').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  </script>
+</body>
+</html>
